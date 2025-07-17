@@ -10,6 +10,19 @@ Projenin bağımlılıklarını yüklemek için aşağıdaki komutları kullanı
 npm install
 ```
 
+Ardından, `.env.example` dosyasını `.env` olarak kopyalayın ve gerekli ortam değişkenlerini doldurun:
+
+```bash
+cp .env.example .env
+# editor .env
+```
+
+Veritabanı geçişlerini çalıştırın:
+
+```bash
+npm run knex migrate:latest
+```
+
 ## Çalıştırma
 
 Uygulamayı başlatmak için:
