@@ -37,7 +37,7 @@ module.exports = () => [
     if (!((isWhiteUser(game, ctx) && isWhiteTurn(moves)) ||
       (isBlackUser(game, ctx) && isBlackTurn(moves)))) {
       ctx.game.busy = false
-      return ctx.answerCbQuery('Don\'t touch')
+      return ctx.answerCbQuery('Dokunma sırası sende değil')
     }
 
     const currentGame = chess.create({ PGN: true })

@@ -67,20 +67,20 @@ module.exports = () => async (ctx) => {
   //         return {
   //           id: idx + 1,
   //           type: 'article',
-  //           title: `Game #${game.id}`,
-  //           description: `Moves: ${moves.length}.
-  // ${isWhiteTurn(moves) ? 'Whites' : 'Blacks'} turn.`,
+  //           title: `Oyun #${game.id}`,
+  //           description: `Hamleler: ${moves.length}.
+  // ${isWhiteTurn(moves) ? 'Beyazlar' : 'Siyahlar'} sırası.`,
   //           input_message_content: {
   //             parse_mode: 'Markdown',
   //             disable_web_page_preview: true,
-  //             message_text: `Black (top): ${enemy.first_name}
-  // White (bottom): ${user.first_name}`,
+  //             message_text: `Siyah (üst): ${enemy.first_name}
+  // Beyaz (alt): ${user.first_name}`,
   //           },
   //           ...board(
   //             status.board.squares,
   //             isWhiteTurn(moves),
   //             [{
-  //               text: 'Settings',
+  //               text: 'Ayarlar',
   //               callback_data: 'settings',
   //             }],
   //             `::${game.id}`
@@ -103,19 +103,17 @@ module.exports = () => async (ctx) => {
       input_message_content: {
         parse_mode: 'Markdown',
         disable_web_page_preview: true,
-        message_text: `Black (top): ?
-White (bottom): ${user.first_name}
-Waiting for a black side | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`,
+        message_text: `Siyah (üst): ?\nBeyaz (alt): ${user.first_name}\nSiyah oyuncu bekleniyor | [Tartışma](https://t.me/${process.env.DISCUSSION_GROUP})`,
       },
       ...board({
         board: status.board.squares,
         isWhite: false,
         callbackOverride: `join::w::${user.id}`,
         actions: [{
-          text: 'Join the game',
+          text: 'Oyuna katıl',
           callback_data: `join::w::${user.id}`,
         }, {
-          text: 'New game',
+          text: 'Yeni oyun',
           switch_inline_query_current_chat: '',
         }],
       }),
@@ -127,19 +125,17 @@ Waiting for a black side | [Discussion](https://t.me/${process.env.DISCUSSION_GR
       input_message_content: {
         parse_mode: 'Markdown',
         disable_web_page_preview: true,
-        message_text: `White (top): ?
-Black (bottom): ${user.first_name}
-Waiting for a white side | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`,
+        message_text: `Beyaz (üst): ?\nSiyah (alt): ${user.first_name}\nBeyaz oyuncu bekleniyor | [Tartışma](https://t.me/${process.env.DISCUSSION_GROUP})`,
       },
       ...board({
         board: status.board.squares,
         isWhite: false,
         callbackOverride: `join::b::${user.id}`,
         actions: [{
-          text: 'Join the game',
+          text: 'Oyuna katıl',
           callback_data: `join::b::${user.id}`,
         }, {
-          text: 'New game',
+          text: 'Yeni oyun',
           switch_inline_query_current_chat: '',
         }],
       }),

@@ -1,75 +1,64 @@
 const Telegraf = require('telegraf')
-
 const { emodji, letters } = require('@/helpers')
-
 const { Markup } = Telegraf
-
 const NIL = 0
 let pieces = (NIL !== 0) ? letters : emodji
-
 /**
- * Board generator function.
+ * Tahta oluşturucu fonksiyon.
  *
- * @param {Array} board The board.
- * @param {Boolean} isWhite Indicates if it is action of a white side.
- * @param {Array[]} actions The additional buttons under the board.
+ * @param {Array} board Tahta.
+ * @param {Boolean} isWhite Beyaz tarafın hamlesi olup olmadığını gösterir.
+ * @param {Array[]} actions Tahtanın altındaki ek butonlar.
  * @return {Extra}
  */
 module.exports = ({ board, isWhite, actions, callbackOverride }) => {
   const horizontal = 'hgfedcba'.split('')
   const vertical = Array.from({ length: 8 }, (item, idx) => idx + 1).reverse()
-
   /**
-   * Nested loops board generation.
+   * İç içe döngülerle tahta oluşturma.
    *
    * @type {Array}
    */
   let boardMarkup = vertical.map((row) => horizontal.map((col) => {
     /**
-     * Find a pressed square.
+     * Basılan kareyi bul.
      *
      * @type {Object}
      */
     const square = board
       .find(({ file, rank }) => file === col && rank === row)
-
     /**
-     * If it is a piece.
+     * Eğer bir taş varsa.
      */
     if (square && square.piece) {
       const piece = pieces[square.piece.side.name][square.piece.type]
-
       return {
         text: `${square.move ? 'X' : ''}${piece}`,
         callback_data: callbackOverride || `${col}${row}`,
       }
     }
-
     /**
-     * If it is an empty square.
+     * Eğer boş bir kare ise.
      */
     return {
       text: square.move ? '·' : unescape('%u0020'),
       callback_data: callbackOverride || `${col}${row}`,
     }
   }))
-
   /**
-   * Manage the rotation of a board.
+   * Tahtanın döndürülmesini yönet.
    */
   if (!isWhite) {
     boardMarkup = boardMarkup.map((row) => row.reverse()).reverse()
   }
-
   /**
-   * Attach additional buttons.
+   * Ek butonları ekle.
    */
   if (actions) {
     boardMarkup.push(actions)
   }
-
   /**
-   * Returns an Extra object.
+   * Extra nesnesini döndürür.
    */
   return Markup.inlineKeyboard(boardMarkup).extra()
 }

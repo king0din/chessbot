@@ -15,7 +15,7 @@ module.exports = () => [
     const game = await getGame(ctx, ctx.match[1])
 
     if (!isBlackUser(game, ctx) && !isWhiteUser(game, ctx)) {
-      return ctx.answerCbQuery('Sorry, this game is busy. Try to make a new one.')
+      return ctx.answerCbQuery('Üzgünüz, bu oyun şu anda meşgul. Yeni bir tane başlatmayı deneyin.')
     }
 
     ctx.game.entry = game
@@ -34,7 +34,7 @@ module.exports = () => [
 
     if ((isWhiteTurn(gameMoves) && isBlackUser(game, ctx)) ||
       (!isWhiteTurn(gameMoves) && isWhiteUser(game, ctx))) {
-      return ctx.answerCbQuery('Wait, please. Now is not your turn.')
+      return ctx.answerCbQuery('Lütfen bekleyin. Şu anda sizin sıranız değil.')
     }
 
     const gameClient = chess.create({ PGN: true })

@@ -48,9 +48,9 @@ const promotionMap = {
 }
 
 /**
- * Sleep pause.
+ * Uyku duraklaması.
  *
- * @param {Number} time The time in milliseconds.
+ * @param {Number} time Milisaniye cinsinden süre.
  * @return {Promise<void>}
  */
 const sleep = (time) => new Promise((resolve) => {
@@ -80,7 +80,7 @@ const isPlayer = (game, ctx) => [Number(game.whites_id), Number(game.blacks_id)]
 
 const isWhiteUser = (game, ctx) => {
   if (!game) {
-    ctx.answerCbQuery('Sorry, game not found.')
+    ctx.answerCbQuery('Üzgünüm, oyun bulunamadı.')
     return false
   }
   return Number(game.whites_id) === ctx.from.id
@@ -88,18 +88,18 @@ const isWhiteUser = (game, ctx) => {
 
 const isBlackUser = (game, ctx) => {
   if (!game) {
-    ctx.answerCbQuery('Sorry, game not found.')
+    ctx.answerCbQuery('Üzgünüm, oyun bulunamadı.')
     return false
   }
   return Number(game.blacks_id) === ctx.from.id
 }
 
 const mainMenu = [
-  [{ text: 'My Games', callback_data: 'games' }],
-  [{ text: 'High Scores', callback_data: 'scores' }],
-  [{ text: 'Donate', callback_data: 'donate' }],
-  [{ text: 'Support', callback_data: 'support' }],
-  [{ text: 'Play with Friend', switch_inline_query: '' }],
+  [{ text: 'Oyunlarım', callback_data: 'games' }],
+  [{ text: 'Yüksek Skorlar', callback_data: 'scores' }],
+  [{ text: 'Bağış Yap', callback_data: 'donate' }],
+  [{ text: 'Destek', callback_data: 'support' }],
+  [{ text: 'Arkadaşınla Oyna', switch_inline_query: '' }],
 ]
 
 const getGame = async (ctx, id) => {
@@ -131,15 +131,15 @@ const getGame = async (ctx, id) => {
 
 const validateGame = (game, ctx) => {
   if (!game) {
-    return ctx.answerCbQuery('Game was removed, sorry. Please try to start a new one, typing @chessy_bot to your message input.')
+    return ctx.answerCbQuery('Oyun kaldırıldı, üzgünüm. Lütfen mesaj giriş alanınıza @chessy_bot yazarak yeni bir oyun başlatmayı deneyin.')
   }
 
   if (!isReady(game)) {
-    return ctx.answerCbQuery('Join the game to move pieces!')
+    return ctx.answerCbQuery('Taşları hareket ettirmek için oyuna katılın!')
   }
 
   if (!isPlayer(game, ctx)) {
-    return ctx.answerCbQuery('This board is full, please start a new one.')
+    return ctx.answerCbQuery('Bu tahta dolu, lütfen yeni bir tane başlatın.')
   }
 
   return game

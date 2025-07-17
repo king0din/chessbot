@@ -1,10 +1,10 @@
 module.exports = (lastTurnCbData) => [{
-//   text: 'Settings',
+//   text: 'Ayarlar',
 //   callback_data: 'settings',
 // }, {
-  text: 'Last turn',
+  text: 'Son hamle',
   callback_data: `last${lastTurnCbData ? '::' + lastTurnCbData : ''}`,
 }, {
-  text: 'New game',
+  text: 'Yeni oyun',
   switch_inline_query_current_chat: '',
 }]

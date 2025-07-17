@@ -18,7 +18,6 @@ module.exports = () => [
       .catch(debug)
 
     let ids = games.reduce(
-      // eslint-disable-next-line camelcase
       (acc, { blacks_id, whites_id }) => {
         if (!acc.includes(blacks_id)) {
           acc.push(blacks_id)
@@ -54,12 +53,12 @@ module.exports = () => [
           .count()
 
         return [{
-          text: `${time} || ${whites} vs ${blacks} || ${movesLength[0]['count(*)']} moves`,
+          text: `${time} || ${whites} vs ${blacks} || ${movesLength[0]['count(*)']} hamle`,
           switch_inline_query: `${game.whites_id}::${game.blacks_id}::${game.id}`,
         }]
       })),
       [{
-        text: '⬅️ Back to menu',
+        text: '⬅️ Menüye dön',
         callback_data: 'main_menu',
       }],
     ] })

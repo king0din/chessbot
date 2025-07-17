@@ -11,7 +11,7 @@ module.exports = () => [
     const game = await getGame(ctx, ctx.match[1])
 
     if (!isBlackUser(game, ctx) && !isWhiteUser(game, ctx)) {
-      return ctx.answerCbQuery('Sorry, this game is busy. Try to make a new one.')
+      return ctx.answerCbQuery('Üzgünüm, bu oyun meşgul. Yeni bir tane yapmayı deneyin.')
     }
 
     switch (ctx.match[2]) {
@@ -30,48 +30,48 @@ module.exports = () => [
                 .catch(debug)
             }
 
-            return ctx.answerCbQuery(`You choose ${ctx.match[3]} rotation mode. It will be applied after the next turn.`)
+            return ctx.answerCbQuery(`Siz ${ctx.match[3]} döndürme modunu seçtiniz. Bu, bir sonraki hamle sonrası uygulanacak.`)
 
           default:
             await ctx.editMessageReplyMarkup({
               inline_keyboard: [
                 [{
-                  text: 'Whites at bottom',
+                  text: 'Beyazlar altta',
                   callback_data: `settings::${game.id}::rotation::whites`,
                 }],
                 [{
-                  text: 'Blacks at bottom',
+                  text: 'Siyahlar altta',
                   callback_data: `settings::${game.id}::rotation::blacks`,
                 }],
                 [{
-                  text: 'Current mover at bottom',
+                  text: 'Mevcut hamleci altta',
                   callback_data: `settings::${game.id}::rotation::dynamic`,
                 }],
                 [{
-                  text: '⬅️ Back to settings',
+                  text: '⬅️ Ayarlara geri dön',
                   callback_data: `settings::${game.id}`,
                 }],
               ],
             }).catch(debug)
 
-            return ctx.answerCbQuery('Please choose a rotation mode!')
+            return ctx.answerCbQuery('Lütfen bir döndürme modu seçin!')
         }
 
       default:
         await ctx.editMessageReplyMarkup({
           inline_keyboard: [
             [{
-              text: 'Board Rotation',
+              text: 'Tahta Döndürme',
               callback_data: `settings::${game.id}::rotation`,
             }],
             [{
-              text: '⬅️ Back to game',
+              text: '⬅️ Oyuna geri dön',
               callback_data: `back::${game.id}`,
             }],
           ],
         }).catch(debug)
 
-        return ctx.answerCbQuery('Please choose a setting you want to change!')
+        return ctx.answerCbQuery('Lütfen değiştirmek istediğiniz bir ayar seçin!')
     }
   },
 ]

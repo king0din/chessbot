@@ -7,13 +7,13 @@ module.exports = () => [
   /^join::([wb])::(\d+)/,
   async (ctx) => {
     if (ctx.game.joined) {
-      return ctx.answerCbQuery('You are already join the game')
+      return ctx.answerCbQuery('Zaten oyuna katıldınız')
     }
     const enemyId = Number(ctx.match[2])
     const iAmWhite = ctx.match[1] !== 'w'
 
     if (ctx.from.id === enemyId) {
-      return ctx.answerCbQuery('You can\'t join yourself!')
+      return ctx.answerCbQuery('Kendinle oynayamazsın!')
     }
 
     let user = await ctx.db('users')
@@ -41,7 +41,7 @@ module.exports = () => [
       .catch(debug)
 
     if (!game) {
-      return ctx.answerCbQuery('Game was removed, sorry. Please try to start a new one, typing @chessy_bot to your message input.')
+      return ctx.answerCbQuery('Oyun silinmiş. Lütfen tekrar deneyin, mesaj kutunuza @santrancbot yazarak yeni bir oyun başlatabilirsiniz.')
     }
 
     ctx.game.entry = game
@@ -63,12 +63,12 @@ module.exports = () => [
 
     await ctx.editMessageText(
       iAmWhite
-        ? `Black (top): ${enemy.first_name}
-White (bottom): ${user.first_name}
-White's turn | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`
-        : `Black (top): ${user.first_name}
-White (bottom): ${enemy.first_name}
-White's turn | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`,
+        ? `Siyah (üst): ${enemy.first_name}
+Beyaz (alt): ${user.first_name}
+Beyaz'ın sırası | [Sohbet](https://t.me/${process.env.DISCUSSION_GROUP})`
+        : `Siyah (üst): ${user.first_name}
+Beyaz (alt): ${enemy.first_name}
+Beyaz'ın sırası | [Sohbet](https://t.me/${process.env.DISCUSSION_GROUP})`,
       {
         ...ctx.game.lastBoard,
         parse_mode: 'Markdown',
@@ -78,6 +78,6 @@ White's turn | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`,
 
     ctx.game.joined = true
 
-    return ctx.answerCbQuery('Now play!')
+    return ctx.answerCbQuery('Şimdi oynayabilirsin!')
   },
 ]

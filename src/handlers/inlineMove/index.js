@@ -18,15 +18,15 @@ const sortFunction = (a, b) => JSON.stringify(a) > JSON.stringify(b) ? 1 : -1
 const mapFunction = ({ dest }) => dest
 
 const statusMessage = ({ isCheck, isCheckmate, isRepetition }) => `
-${isCheck ? '|CHECK|' : ''}${isCheckmate ? '|CHECKMATE|' : ''}${isRepetition ? '|REPETITION|' : ''}`
+${isCheck ? '|ŞAH|' : ''}${isCheckmate ? '|MAT|' : ''}${isRepetition ? '|TEKRAR|' : ''}`
 
 const topMessage = (whiteTurn, player, enemy) => whiteTurn
-  ? `White (top): ${player.first_name}
-Black (bottom): [${enemy.first_name}](tg://user?id=${enemy.id})
-Black's turn | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`
-  : `Black (top): ${player.first_name}
-White (bottom): [${enemy.first_name}](tg://user?id=${enemy.id})
-White's turn | [Discussion](https://t.me/${process.env.DISCUSSION_GROUP})`
+  ? `Beyaz (üst): ${player.first_name}
+Siyah (alt): [${enemy.first_name}](tg://user?id=${enemy.id})
+Siyahın sırası | [Sohbet](https://t.me/${process.env.DISCUSSION_GROUP})`
+  : `Siyah (üst): ${player.first_name}
+Beyaz (alt): [${enemy.first_name}](tg://user?id=${enemy.id})
+Beyazın sırası | [Sohbet](https://t.me/${process.env.DISCUSSION_GROUP})`
 
 module.exports = () => [
   /^([a-h])([1-8])([QRNB])?$/,
@@ -45,7 +45,7 @@ module.exports = () => [
 
     if (!isBlackUser(gameEntry, ctx) && !isWhiteUser(gameEntry, ctx)) {
       ctx.game.busy = false
-      return ctx.answerCbQuery('Sorry, this game is busy. Try to make a new one.')
+      return ctx.answerCbQuery('Üzgünüm, bu oyun meşgul. Yeni bir tane başlatmayı deneyin.')
     }
 
     ctx.game.entry = gameEntry
@@ -59,7 +59,7 @@ module.exports = () => [
     if ((isWhiteTurn(gameMoves) && isBlackUser(gameEntry, ctx)) ||
       (!isWhiteTurn(gameMoves) && isWhiteUser(gameEntry, ctx))) {
       ctx.game.busy = false
-      return ctx.answerCbQuery('Wait, please. Now is not your turn.')
+      return ctx.answerCbQuery('Lütfen bekleyin. Şu an sizin sıranız değil.')
     }
 
     const gameClient = chess.create({ PGN: true })
@@ -94,7 +94,7 @@ module.exports = () => [
       return ctx.answerCbQuery()
     }
     /**
-     * Selection of a piece
+     * Bir taş seçimi
      */
     if (
       pressed && pressed.piece &&
@@ -150,7 +150,7 @@ module.exports = () => [
     }
 
     /**
-     * Selection of a destination to move
+     * Bir hedef seçimi
      */
     if (ctx.game.selected) {
       if (
